@@ -14,11 +14,16 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 });
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('users', UserController::class);
+});
+
+Route::resource('users', UserController::class)->middleware('auth');
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('users', UserController::class)->middleware('auth');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
